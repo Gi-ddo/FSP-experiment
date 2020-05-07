@@ -12,10 +12,11 @@ public class Projectile_fire : MonoBehaviour
     private Camera cam;
     public LayerMask layer;
     public GameObject cursor_indicator;
+    private Vector3 initial_velocity;
 
     [Header("Setter Variables")]
     public int Path_length;
-    public int time_;
+    public float time_;
 
 
     // Start is called before the first frame update
@@ -71,11 +72,11 @@ public class Projectile_fire : MonoBehaviour
         return result;
     }
 
-    void Shoot()
+   
+    void Trajectory_setup()
     {
         Ray cursor_ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
         if (Physics.Raycast(cursor_ray, out hit, 100f, layer))
         {
             // Makes the target cursor appear when we aim
@@ -83,41 +84,39 @@ public class Projectile_fire : MonoBehaviour
             cursor_indicator.transform.position = hit.point + Vector3.up * 0.1f;
 
             //Makes the laucher and rotate to the direction of the initial velocity
-
-            Vector3 initial_velocity = Calculate_velocity(hit.point,start_point.position, time_);
+            initial_velocity = Calculate_velocity(hit.point, start_point.position, time_);
             Draw_path(initial_velocity);
             transform.rotation = Quaternion.LookRotation(initial_velocity);
-           
 
             if (Input.GetMouseButtonDown(0))
             {
                 Rigidbody obj = Instantiate(projectile_prefab, start_point.position, Quaternion.identity);
                 obj.velocity = initial_velocity;
             }
-
         }
         else
         {
             cursor_indicator.SetActive(false);
         }
     }
+
+    //Function that draws the predicted path arc on the scene
     void Draw_path(Vector3 Vi)
     {
-       
-        for(int i=0; i < Path_length; i++)
+        for (int i = 0; i < Path_length; i++)
         {
             float t_ = i / (float)Path_length;
             Vector3 pos = CalculatePos(Vi, t_);
             Path.SetPosition(i, pos);
         }
-
     }
 
     void Update()
-    {   
-        
-        Shoot();
+    {
+        Trajectory_setup();     
     }
+
+    
 
 }
 
