@@ -13,11 +13,9 @@ public class Projectile_fire : MonoBehaviour
     public LayerMask layer;
     public GameObject cursor_indicator;
     private Vector3 initial_velocity;
-
     [Header("Setter Variables")]
     public int Path_length;
     public float time_;
-
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +53,6 @@ public class Projectile_fire : MonoBehaviour
         result.y = Vy;
 
         return result;
-
     }
 
     //Returns the distance travalled along the trajctory in the XYZ plane
@@ -111,9 +108,32 @@ public class Projectile_fire : MonoBehaviour
         }
     }
 
+    void free_firemode()
+    {
+        Ray cursor_ray = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(cursor_ray, out hit , 1000f, layer)){
+            initial_velocity = Calculate_velocity(hit.point, start_point.position, time_);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Rigidbody obj = Instantiate(projectile_prefab, start_point.position, Quaternion.identity);
+                obj.velocity = initial_velocity;
+            }
+
+        }
+    }
+
+
     void Update()
     {
-        Trajectory_setup();     
+ 
+            free_firemode();
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            Trajectory_setup();
+        }   
     }
 
     
