@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile_fire : MonoBehaviour
 {
-    [Header("Resources")]
+    [Header("Generic Variables")]
     public LineRenderer Path;
     public Transform end_point;
     public Rigidbody projectile_prefab;
@@ -12,7 +12,10 @@ public class Projectile_fire : MonoBehaviour
     private Camera cam;
     public LayerMask layer;
     public GameObject cursor_indicator;
+    public float fire_rate;
+    public float next_fire;
     private Vector3 initial_velocity;
+
     [Header("Setter Variables")]
     public int Path_length;
     public float time_;
@@ -20,7 +23,7 @@ public class Projectile_fire : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = Camera.main;
+        cam = Camera.main; // this is cam = GameObject.FindObjectWithTag('Main Camera').GetComponent<Camera>();
         Path.positionCount = Path_length;
     }
 
@@ -78,22 +81,23 @@ public class Projectile_fire : MonoBehaviour
         {
             // Makes the target cursor appear when we aim
             cursor_indicator.SetActive(true);
-            cursor_indicator.transform.position = hit.point + Vector3.up * 0.1f;
+            Path.enabled = true;
+            cursor_indicator.transform.position = hit.point + hit.normal * 0.1f;
+            cursor_indicator.transform.LookAt(hit.point - hit.normal);
+
 
             //Makes the laucher and rotate to the direction of the initial velocity
             initial_velocity = Calculate_velocity(hit.point, start_point.position, time_);
             Draw_path(initial_velocity);
             transform.rotation = Quaternion.LookRotation(initial_velocity);
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                Rigidbody obj = Instantiate(projectile_prefab, start_point.position, Quaternion.identity);
-                obj.velocity = initial_velocity;
-            }
+
+            Shoot();
         }
         else
         {
             cursor_indicator.SetActive(false);
+            Path.enabled = false;
         }
     }
 
@@ -108,32 +112,38 @@ public class Projectile_fire : MonoBehaviour
         }
     }
 
-    void free_firemode()
+    void Shoot()
     {
         Ray cursor_ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
-        if (Physics.Raycast(cursor_ray, out hit , 1000f, layer)){
+        if (Physics.Raycast(cursor_ray, out hit, 100f, layer))
+        {
             initial_velocity = Calculate_velocity(hit.point, start_point.position, time_);
-
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && Time.time > next_fire)
             {
+                next_fire = Time.time + fire_rate;
                 Rigidbody obj = Instantiate(projectile_prefab, start_point.position, Quaternion.identity);
                 obj.velocity = initial_velocity;
             }
-
         }
     }
 
-
     void Update()
-    {
- 
-            free_firemode();
+    {  
         if (Input.GetKey(KeyCode.Mouse1))
         {
+           
+            Path.enabled = true;
             Trajectory_setup();
-        }   
+        } else
+        {
+            Shoot();
+        } 
+        if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            cursor_indicator.SetActive(false);
+            Path.enabled = false;
+        }
     }
 
     
