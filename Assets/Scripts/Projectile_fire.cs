@@ -7,7 +7,6 @@ public class Projectile_fire : MonoBehaviour
     [Header("Generic Variables")]
     public LineRenderer Path;
     public Transform end_point;
-    public Rigidbody projectile_prefab;
     public Transform start_point;
     private Camera cam;
     public LayerMask layer;
@@ -15,7 +14,7 @@ public class Projectile_fire : MonoBehaviour
     public float fire_rate;
     public float next_fire;
     private Vector3 initial_velocity;
-
+    private Rigidbody rb;
     [Header("Setter Variables")]
     public int Path_length;
     public float time_;
@@ -122,8 +121,18 @@ public class Projectile_fire : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && Time.time > next_fire)
             {
                 next_fire = Time.time + fire_rate;
-                Rigidbody obj = Instantiate(projectile_prefab, start_point.position, Quaternion.identity);
-                obj.velocity = initial_velocity;
+
+                //object pooling in action
+                GameObject projectile_object = Object_pooler.current.Get_polled_object();
+                rb = projectile_object.GetComponent<Rigidbody>();
+
+                if(projectile_object!= null)
+                {
+                    projectile_object.transform.position = start_point.position;
+                    projectile_object.transform.rotation = start_point.rotation;
+                    projectile_object.SetActive(true);
+                    rb.velocity = initial_velocity;
+                }
             }
         }
     }

@@ -311,8 +311,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: {fileID: 171258815}
   end_point: {fileID: 1004312936}
-  projectile_prefab: {fileID: 7020171592649438152, guid: 0e460f8973b3ae3439d114310ae9af57,
-    type: 3}
   start_point: {fileID: 279923195}
   layer:
     serializedVersion: 2
