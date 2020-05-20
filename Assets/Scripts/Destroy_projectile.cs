@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class Destroy_projectile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] protected int collision_count;
+     
+     void OnCollisionEnter(Collision collision)
     {
+        collision_count++;
+        print(collision_count);
+
+        if(collision_count >= 4)
+        {
+            gameObject.SetActive(false);
+            collision_count = 0;
+        }
+
+        if (collision.gameObject.CompareTag("Outside"))
+        {
+            gameObject.SetActive(false);
+        }
         
+            
+       
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

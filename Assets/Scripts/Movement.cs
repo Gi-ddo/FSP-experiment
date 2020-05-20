@@ -37,6 +37,7 @@ public class Movement : MonoBehaviour
         Vector3 newPos = transform.TransformDirection(input_mov) * mov_speed;
         player_rb.velocity = Vector3.Lerp(player_rb.velocity, newPos, step_speed * Time.fixedDeltaTime);
         player_rb.angularVelocity = Vector3.zero;
+        
     }
 }
 
