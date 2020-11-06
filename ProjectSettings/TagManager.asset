@@ -10,6 +10,11 @@ TagManager:
   - low
   - mid
   - high
+  - Hoops
+  - Obj
+  - active2
+  - Bouncy_area
+  - active3
   layers:
   - Default
   - TransparentFX

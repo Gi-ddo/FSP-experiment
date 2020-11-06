@@ -10,6 +10,8 @@ public class Destroy_projectile : MonoBehaviour
     public GameObject mid;
     public GameObject high;
     public PhysicMaterial bouncy;
+    public static int hoops_count=3;
+    public static int obj_count=5;
    
     void OnCollisionEnter(Collision collision)
     {
@@ -23,11 +25,38 @@ public class Destroy_projectile : MonoBehaviour
             collision_count = 0;
         }
 
+        if (collision.gameObject.CompareTag("Level_area"))
+        {
+            Instantiate(explosion_effect, transform.position, Quaternion.identity);
+            explosion_effect.Play();
+            gameObject.SetActive(false);
+        }
+
+        if (collision.gameObject.CompareTag("Obj"))
+        {
+            Instantiate(explosion_effect, transform.position, Quaternion.identity);
+            explosion_effect.Play();
+            obj_count--;
+            gameObject.SetActive(false);
+            Destroy(collision.gameObject);
+           
+        }
+
+        if (collision.gameObject.CompareTag("Hoops"))
+        {
+            Instantiate(explosion_effect, transform.position, Quaternion.identity);
+            explosion_effect.Play();
+            hoops_count--;
+            gameObject.SetActive(false);
+            Destroy(collision.gameObject);
+            
+        }
+
         if (collision.gameObject.CompareTag("low"))
         {
 
             bouncy.bounciness = 0.5f;
-            print(bouncy.bounciness);
+
         }
 
         if (collision.gameObject.CompareTag("mid"))
@@ -44,5 +73,7 @@ public class Destroy_projectile : MonoBehaviour
 
 
     }
+
+    
 
 }
