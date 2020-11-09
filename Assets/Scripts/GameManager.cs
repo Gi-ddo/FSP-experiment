@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
-{
-    
+{   
     void Update()
     {
         endGame();
         restart();
-        
     }
 
     void endGame()
@@ -30,6 +28,4 @@ public class GameManager : MonoBehaviour
     }
 
     
-
-
 }

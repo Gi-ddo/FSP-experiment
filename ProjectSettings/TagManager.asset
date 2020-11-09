@@ -5,11 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Outside
-  - Level_area
-  - active
-  - low
-  - mid
-  - high
   layers:
   - Default
   - TransparentFX
@@ -21,7 +16,7 @@ TagManager:
   - 
   - Player
   - Projectiles
-  - Target
+  - 
   - 
   - 
   - 
