@@ -81,10 +81,10 @@ public class Projectile_fire : MonoBehaviour
             // Makes the target cursor appear when we aim
             cursor_indicator.SetActive(true);
             Path.enabled = true;
-            cursor_indicator.transform.position = hit.point + hit.normal * 0.05f;
-            cursor_indicator.transform.LookAt(hit.point - hit.normal );
+            cursor_indicator.transform.position = hit.point + hit.normal * 0.1f;
+            cursor_indicator.transform.LookAt(hit.point - hit.normal);
 
-            
+
             //Makes the laucher rotate to the direction of the initial velocity
             initial_velocity = Calculate_velocity(hit.point, start_point.position, time_);
             Draw_path(initial_velocity);

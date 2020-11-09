@@ -130,5 +130,3 @@ MonoBehaviour:
   mid: {fileID: 5510853014802163671, guid: 19e8fc92603b9de41b77c0a7830a1445, type: 3}
   high: {fileID: 4386975766250810687, guid: d68b492c7f868984bb28d8b1dadb82f3, type: 3}
   bouncy: {fileID: 13400000, guid: ee0a77ce6eae0e345accc3eeba94827e, type: 2}
-  hoops_count: 3
-  obj_count: 5

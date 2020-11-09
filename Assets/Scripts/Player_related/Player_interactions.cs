@@ -12,23 +12,8 @@ public class Player_interactions : MonoBehaviour
         if (other.gameObject.CompareTag("active"))
         {
             weapon.SetActive(true);
-            tut.Invoke("activate_tut1_txt", 1f);
-            tut.Invoke("disable_prac_txt", 20f);
+            tut.Invoke("activate_pract_txt", 1f);
+            tut.Invoke("disable_prac_txt", 35f);
         }
-
-        if (other.gameObject.CompareTag("active2"))
-        {
-            tut.Invoke("activate_2nd_room", 1f);
-            tut.Invoke("activate_2nd_room_items", 5f);
-
-        }
-
-        if (other.gameObject.CompareTag("active3"))
-        {
-            tut.Invoke("activate_third_room", 1f);
-            tut.Invoke("activate_third_room2", 10f);
-
-        }
-
     }
 }
